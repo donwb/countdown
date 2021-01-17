@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var hourTextField: UITextField!
     @IBOutlet weak var minutesTextField: UITextField!
     @IBOutlet weak var secondsTextField: UITextField!
-    
+    @IBOutlet weak var nextAuctionLabel: UILabel!
     @IBOutlet weak var speechSwitch: UISwitch!
     
     
@@ -38,6 +38,8 @@ class ViewController: UIViewController {
         
         // TODO: remove this and handle nil starting time
         _nextAuction = CountdownTime(hour: 23, minutes: 24, seconds: 59)
+        
+        nextAuctionLabel.text = "No time set!"
         
         _timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
         
@@ -74,7 +76,13 @@ class ViewController: UIViewController {
     private func setAuctionTime(h: Int?, m: Int?, s: Int?) {
         print("Setting auction time for: \(h):\(m):\(s)")
         
-            _nextAuction = CountdownTime(hour: h!, minutes: m!, seconds: s!)
+        _nextAuction = CountdownTime(hour: h!, minutes: m!, seconds: s!)
+        
+        
+        let mins = m! < 10 ? doubleUp(t: m!) : String(m!)
+        let secs = s! < 10 ? doubleUp(t: s!) : String(s!)
+        
+        nextAuctionLabel.text = "\(h!):\(mins):\(secs)"
     }
 
     @objc func fireTimer() {
