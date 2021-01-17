@@ -77,6 +77,17 @@
                                     <action selector="setTimeAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wgc-gV-vBh"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QbU-BK-Ge3">
+                                <rect key="frame" x="27" y="448" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Toggle Time Speech" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mE6-Eh-jDF">
+                                <rect key="frame" x="94" y="453" width="156" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -87,6 +98,7 @@
                         <outlet property="minseclabel" destination="ZZo-41-key" id="cUf-s5-b5w"/>
                         <outlet property="minutesTextField" destination="CnS-Wo-wm3" id="8pR-Xh-lTf"/>
                         <outlet property="secondsTextField" destination="ZMy-QN-GKw" id="gJl-Z5-1yK"/>
+                        <outlet property="speechSwitch" destination="QbU-BK-Ge3" id="Lft-6K-La5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

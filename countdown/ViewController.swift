@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var minutesTextField: UITextField!
     @IBOutlet weak var secondsTextField: UITextField!
     
+    @IBOutlet weak var speechSwitch: UISwitch!
+    
+    
     private var _timer: Timer?
     private var _nextAuction: CountdownTime?
     
@@ -127,7 +130,10 @@ class ViewController: UIViewController {
         if (inTheMinute) {
             currTime.secondsColor = .red
             
-            speakCountdown(whatToSay: String(currTime.seconds))
+            if speechSwitch.isOn {
+                speakCountdown(whatToSay: String(currTime.seconds))
+            }
+            
             
         } else {
             currTime.secondsColor = .black
