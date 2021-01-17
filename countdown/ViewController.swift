@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -125,6 +126,9 @@ class ViewController: UIViewController {
         // This will be more complex soon
         if (inTheMinute) {
             currTime.secondsColor = .red
+            
+            speakCountdown(whatToSay: String(currTime.seconds))
+            
         } else {
             currTime.secondsColor = .black
         }
@@ -146,6 +150,22 @@ class ViewController: UIViewController {
     
     private func doubleUp(t: Int) -> String {
         return "0" + String(t)
+    }
+    
+    private func speakCountdown(whatToSay: String) {
+        print("Speak: \(whatToSay)")
+        
+        let utterance = AVSpeechUtterance(string: whatToSay)
+        utterance.rate = 0.57
+        utterance.pitchMultiplier = 0.8
+        utterance.postUtteranceDelay = 0.2
+        utterance.volume = 0.8
+        
+        let voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.voice = voice
+        
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
     }
 
 }
