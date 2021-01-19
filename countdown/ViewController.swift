@@ -63,6 +63,9 @@ class ViewController: UIViewController {
             
             alert = UIAlertController(title: "Success!", message: "The auction time was set", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            clearTimes()
+            
         } else {
             alert = UIAlertController(title: "Failed!", message: "The input is invalid", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -89,6 +92,18 @@ class ViewController: UIViewController {
         fetchCurrentTime()
     }
     
+    private func clearTimes() {
+        print("clear it out ")
+        
+        hourTextField.text = ""
+        minutesTextField.text = ""
+        secondsTextField.text = ""
+        
+        secondsTextField.resignFirstResponder()
+        minutesTextField.resignFirstResponder()
+        hourTextField.resignFirstResponder()
+        
+    }
     
 
     private func fetchCurrentTime() {
@@ -184,3 +199,30 @@ class ViewController: UIViewController {
 
 }
 
+/*
+extension ViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        
+        return false
+    }
+}
+
+
+extension ViewController  {
+    func setupToHideKeyboardOnTapOnView() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard())
+        )
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+*/
