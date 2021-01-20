@@ -46,6 +46,23 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func dateRefactor(_ sender: Any) {
+        //let date = Date.init()
+        
+        let ct = CountdownTimer(hour: 11, minutes: 05, seconds: 22)
+        
+        let friendlyTime = ct.getFriendlyTime()
+        
+        let now = ct.getNowAsSeconds()
+        let stored = ct.goalSeconds()
+        let hh = ct.getGoalHours()
+        
+        print("Friendly time: \(friendlyTime)")
+        print("Now: \(now) Stored: \(stored)")
+        print("Goal Hours: \(hh)")
+        
+    }
+    
     @IBAction func setTimeAction(_ sender: Any) {
         
         let h = hourTextField.text ?? ""
