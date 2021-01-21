@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     
     private var _timer: Timer?
     private var _nextAuction: CountdownTime?
+    private var _newNextAuction: CountdownTimer?
     
     private struct CountdownTime {
         var hour: Int
@@ -47,9 +48,11 @@ class ViewController: UIViewController {
     
     
     @IBAction func dateRefactor(_ sender: Any) {
-        //let date = Date.init()
-        
-        let ct = CountdownTimer(hour: 0, minutes: 43, seconds: 59)
+
+        guard let ct = _newNextAuction else {
+            print("The auction isn't set")
+            return
+        }
         
         let friendlyTime = ct.getDisplayTime()
         
@@ -105,10 +108,11 @@ class ViewController: UIViewController {
     }
 
     private func setAuctionTime(h: Int?, m: Int?, s: Int?) {
-        print("Setting auction time for: \(h):\(m):\(s)")
+        print("Setting auction time for: \(h!):\(m!):\(s!)")
         
         _nextAuction = CountdownTime(hour: h!, minutes: m!, seconds: s!)
         
+        _newNextAuction = CountdownTimer(hour: h!, minutes: m!, seconds: s!)
         
         let mins = m! < 10 ? doubleUp(t: m!) : String(m!)
         let secs = s! < 10 ? doubleUp(t: s!) : String(s!)
@@ -117,7 +121,10 @@ class ViewController: UIViewController {
     }
 
     @objc func fireTimer() {
-        fetchCurrentTime()
+        //fetchCurrentTime()
+        
+        newFetchCurrentTime()
+        
     }
     
     private func clearTimes() {
@@ -134,6 +141,50 @@ class ViewController: UIViewController {
     }
     
 
+    private func newFetchCurrentTime() {
+        /*
+        guard let nextAuction = _newNextAuction else {
+            print("there is no action set")
+            return
+        }
+        */
+        //let now = nextAuction.getNowAsSeconds()
+        let now = Date()
+        //let secondsRemaining = nextAuction.diff(currentTime: now)
+        
+        // if there is now current auction set, then send -9999
+        // to the display method
+        let secondsRemaining: Int
+        if let nextAuction = _newNextAuction {
+            secondsRemaining = nextAuction.diff(currentTime: now)
+        } else {
+            secondsRemaining = -9999
+        }
+        
+        displayTime(secondsRemaining: secondsRemaining, now: now)
+        
+        
+    }
+    
+    private func displayTime(secondsRemaining: Int, now: Date) {
+        // if -9999 is sent, there is no auction going, so just
+        // paint the time... if other value, then one is one and
+        // need to do all the fancy things
+        
+        // TODO: - CHECK FOR -9999 AND DO DISPLAY/SPEACH STUFF IF TRUE
+        
+        let calendar = Calendar.current
+        let h = calendar.component(.hour, from: now)
+        let m = calendar.component(.minute, from: now)
+        let s = calendar.component(.second, from: now)
+        
+        hourLabel.text = String(h)
+        let secs = doubleUp(t: s)
+        let minsec = "\(m):\(secs)"
+        minseclabel.text = minsec
+        
+    }
+    
     private func fetchCurrentTime() {
         let date = Date()
         let calendar = Calendar.current
@@ -206,7 +257,12 @@ class ViewController: UIViewController {
 
     
     private func doubleUp(t: Int) -> String {
-        return "0" + String(t)
+        if t < 10 {
+            return "0" + String(t)
+        } else {
+            return String(t)
+        }
+        
     }
     
     private func speakCountdown(whatToSay: String) {
