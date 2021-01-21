@@ -95,6 +95,18 @@ public class CountdownTimer {
         
     }
     
+    public func diff(currentTime: Date) -> Int {
+        let interval = currentTime.timeIntervalSinceReferenceDate
+        let ct = Int(interval)
+        
+        let st = getGoalTotalSeconds()
+        
+        let diff = st - ct
+        
+        return diff
+        
+    }
+    
     //MARK: - Private Methods
    
     private func getGoalIncrements(dateFormatter: DateFormatter) -> Int {

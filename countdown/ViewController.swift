@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     @IBAction func dateRefactor(_ sender: Any) {
         //let date = Date.init()
         
-        let ct = CountdownTimer(hour: 11, minutes: 05, seconds: 22)
+        let ct = CountdownTimer(hour: 0, minutes: 43, seconds: 59)
         
         let friendlyTime = ct.getDisplayTime()
         
@@ -64,6 +64,14 @@ class ViewController: UIViewController {
         print("Goal Hours: \(hh)")
         print("Goal Minutes: \(mm)")
         print("Goal Seconds: \(ss)")
+        
+        
+        let n = Date()
+        
+        let secondsRemaining = ct.diff(currentTime: n)
+        print("secondsRemaining: \(secondsRemaining)")
+        
+        
     }
     
     @IBAction func setTimeAction(_ sender: Any) {
