@@ -11,6 +11,7 @@ import Foundation
 public class CountdownTimer {
     private var _date: Date?
     
+    // MARK: - Initializers
     
     init(date: Date) {
         _date = date
@@ -45,7 +46,9 @@ public class CountdownTimer {
         }
     }
     
-    public func getFriendlyTime() -> String {
+    // MARK: - Getters for time display
+    
+    public func getDisplayTime() -> String {
         let df = setupDateFormatter(formatString: "HH:mm:ss")
         
         let t = df.string(from: _date!)
@@ -57,15 +60,33 @@ public class CountdownTimer {
     public func getGoalHours() -> Int {
         let df = setupDateFormatter(formatString: "HH")
         
-        let t = df.string(from: _date!)
-        if let intTime = Int(t) {
-            return intTime
-        } else {
-            return -1
-        }
+        return getGoalIncrements(dateFormatter: df)
         
         
     }
+    
+    public func getGoalMinutes() -> Int {
+        let df = setupDateFormatter(formatString: "mm")
+        
+        return getGoalIncrements(dateFormatter: df)
+    }
+    
+    public func getGoalSeconds() -> Int {
+        let df = setupDateFormatter(formatString: "ss")
+        return getGoalIncrements(dateFormatter: df)
+        
+    }
+    
+    // returns 0 if fails
+    public func getGoalTotalSeconds() -> Int {
+        if let secs = _date?.timeIntervalSinceReferenceDate {
+            return Int(secs)
+        } else {
+            return 0
+        }
+    }
+    
+    
     public func getNowAsSeconds() -> Int {
         let d = Date()
         let secs = d.timeIntervalSinceReferenceDate
@@ -74,15 +95,16 @@ public class CountdownTimer {
         
     }
     
-    // returns 0 if fails
-    public func goalSeconds() -> Int {
-        if let secs = _date?.timeIntervalSinceReferenceDate {
-            return Int(secs)
+    //MARK: - Private Methods
+   
+    private func getGoalIncrements(dateFormatter: DateFormatter) -> Int {
+        let t = dateFormatter.string(from: _date!)
+        if let intTime = Int(t) {
+            return intTime
         } else {
-            return 0
+            return -1
         }
     }
-    
     
     private func setupDateFormatter(formatString: String) -> DateFormatter {
         let df = DateFormatter()

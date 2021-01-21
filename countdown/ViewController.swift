@@ -51,16 +51,19 @@ class ViewController: UIViewController {
         
         let ct = CountdownTimer(hour: 11, minutes: 05, seconds: 22)
         
-        let friendlyTime = ct.getFriendlyTime()
+        let friendlyTime = ct.getDisplayTime()
         
         let now = ct.getNowAsSeconds()
-        let stored = ct.goalSeconds()
+        let stored = ct.getGoalTotalSeconds()
         let hh = ct.getGoalHours()
+        let mm = ct.getGoalMinutes()
+        let ss = ct.getGoalSeconds()
         
         print("Friendly time: \(friendlyTime)")
         print("Now: \(now) Stored: \(stored)")
         print("Goal Hours: \(hh)")
-        
+        print("Goal Minutes: \(mm)")
+        print("Goal Seconds: \(ss)")
     }
     
     @IBAction func setTimeAction(_ sender: Any) {
