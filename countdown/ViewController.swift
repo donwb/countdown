@@ -22,6 +22,9 @@ class ViewController: UIViewController {
     private var _timer: Timer?
     private var _nextAuction: CountdownTime?
     private var _newNextAuction: CountdownTimer?
+    private var _speakThreshold: Int?
+    private var _visualThreshold: Int?
+    
     
     private struct CountdownTime {
         var hour: Int
@@ -36,6 +39,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        // Threshold Defaults
+        _speakThreshold = 25
+        _visualThreshold = 90
         
         // TODO: remove this and handle nil starting time
         _nextAuction = CountdownTime(hour: 23, minutes: 24, seconds: 59)
@@ -180,7 +187,28 @@ class ViewController: UIViewController {
         
         hourLabel.text = String(h)
         let secs = doubleUp(t: s)
-        let minsec = "\(m):\(secs)"
+        let mins = doubleUp(t: m)
+        guard let visualThreshold = _visualThreshold else {
+            print("For some reason the visual threshold isn't set")
+            return
+        }
+        if ((secondsRemaining < visualThreshold) && (secondsRemaining >= 0)){
+            hourLabel.textColor = .red
+            minseclabel.textColor = .red
+        } else {
+            hourLabel.textColor = .black
+            minseclabel.textColor = .black
+        }
+        
+        guard let speakThreshold = _speakThreshold else {
+            return
+        }
+        if ((secondsRemaining < speakThreshold) && (secondsRemaining >= 0)) {
+            print("Speaking: \(secondsRemaining)")
+            speakCountdown(whatToSay: String(secondsRemaining))
+        }
+        
+        let minsec = "\(mins):\(secs)"
         minseclabel.text = minsec
         
     }
