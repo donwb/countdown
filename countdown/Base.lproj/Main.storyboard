@@ -103,9 +103,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXu-Xs-FkD">
-                                <rect key="frame" x="136" y="602" width="95" height="30"/>
+                                <rect key="frame" x="85" y="721" width="196" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Date Refactor"/>
+                                <state key="normal" title="Test Countdown Timer Class"/>
                                 <connections>
                                     <action selector="dateRefactor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZZ1-Lk-e1d"/>
                                 </connections>

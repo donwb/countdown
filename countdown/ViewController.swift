@@ -20,21 +20,10 @@ class ViewController: UIViewController {
     
     
     private var _timer: Timer?
-    private var _nextAuction: CountdownTime?
     private var _newNextAuction: CountdownTimer?
     private var _speakThreshold: Int?
     private var _visualThreshold: Int?
     
-    
-    private struct CountdownTime {
-        var hour: Int
-        var hourColor: UIColor?
-        var minutes: Int
-        var minutesColor: UIColor?
-        var seconds: Int
-        var secondsColor: UIColor?
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +34,7 @@ class ViewController: UIViewController {
         _visualThreshold = 90
         
         // TODO: remove this and handle nil starting time
-        _nextAuction = CountdownTime(hour: 23, minutes: 24, seconds: 59)
+        
         
         nextAuctionLabel.text = "No time set!"
         
@@ -117,8 +106,6 @@ class ViewController: UIViewController {
     private func setAuctionTime(h: Int?, m: Int?, s: Int?) {
         print("Setting auction time for: \(h!):\(m!):\(s!)")
         
-        _nextAuction = CountdownTime(hour: h!, minutes: m!, seconds: s!)
-        
         _newNextAuction = CountdownTimer(hour: h!, minutes: m!, seconds: s!)
         
         let mins = m! < 10 ? doubleUp(t: m!) : String(m!)
@@ -128,9 +115,8 @@ class ViewController: UIViewController {
     }
 
     @objc func fireTimer() {
-        //fetchCurrentTime()
         
-        newFetchCurrentTime()
+        fetchCurrentTime()
         
     }
     
@@ -148,7 +134,7 @@ class ViewController: UIViewController {
     }
     
 
-    private func newFetchCurrentTime() {
+    private func fetchCurrentTime() {
         /*
         guard let nextAuction = _newNextAuction else {
             print("there is no action set")
@@ -212,76 +198,6 @@ class ViewController: UIViewController {
         minseclabel.text = minsec
         
     }
-    
-    private func fetchCurrentTime() {
-        let date = Date()
-        let calendar = Calendar.current
-        
-        let h = calendar.component(.hour, from: date)
-        let m = calendar.component(.minute, from: date)
-        let s = calendar.component(.second, from: date)
-        
-        // print("Time: \(h) : \(m) : \(s)")
-        
-        var currTime = CountdownTime(hour: h, minutes: m, seconds: s)
-        
-        
-        formatTime(&currTime)
-    }
-    
-    private func formatTime(_ currTime: inout ViewController.CountdownTime) {
-        var inTheHour = false
-        var inTheMinute = false
-        
-        if currTime.hour == _nextAuction?.hour {
-            currTime.hourColor = .systemRed
-            inTheHour = true
-        } else {
-            currTime.hourColor = .black
-            inTheHour = false
-        }
-        
-        
-        // finally format the string and paint screen
-        hourLabel.text = String(currTime.hour)
-        hourLabel.textColor = currTime.hourColor
-        
-        // Do the minute stuff
-        if ((currTime.minutes == _nextAuction?.minutes) && inTheHour) {
-            print("we're getting close!!!!!")
-            currTime.minutesColor = .red
-            inTheMinute = true
-        } else {
-            currTime.minutesColor = .black
-            inTheMinute = false
-        }
-        
-        // This will be more complex soon
-        if (inTheMinute) {
-            currTime.secondsColor = .red
-            
-            if speechSwitch.isOn {
-                speakCountdown(whatToSay: String(currTime.seconds))
-            }
-            
-            
-        } else {
-            currTime.secondsColor = .black
-        }
-        
-        var strSeconds: String?
-        if currTime.seconds < 10 {
-            strSeconds = doubleUp(t: currTime.seconds)
-        } else {
-            strSeconds = String(currTime.seconds)
-        }
-        
-        //TODO: break this into a minute and second label
-        let minsec = String(currTime.minutes) + ":" + strSeconds!
-        minseclabel.textColor = currTime.minutesColor
-        minseclabel.text = minsec
-    }
-    
 
     
     private func doubleUp(t: Int) -> String {
